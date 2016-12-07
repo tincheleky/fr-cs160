@@ -5,7 +5,8 @@ class VipsController < ApplicationController
   before_action :set_vip, only: [:show, :edit, :update, :destroy]
   IP_PORT = 'http://gcp-fr.appspot.com'
   protect_from_forgery with: :null_session
-
+  attr_reader :tempURL
+  attr_reader :tempBody 
 
   # GET /vips
   # GET /vips.json
@@ -54,9 +55,12 @@ class VipsController < ApplicationController
         http.request(request)
       end
 
+    @tempURL = "#{IP_PORT}#{@vip.image.url}"
+    @tempBody = response.body
     puts response.body
     data = JSON.parse(response.body)
     puts '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+    puts tempURL
     @vip.img_name = data['persistedFaceId']
     #puts params.inspect
 
