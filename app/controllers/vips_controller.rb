@@ -3,6 +3,8 @@ require 'json'
 
 class VipsController < ApplicationController
   before_action :set_vip, only: [:show, :edit, :update, :destroy]
+  IP_PORT = 'http://67.188.93.111:3000'
+
 
   # GET /vips
   # GET /vips.json
@@ -30,6 +32,10 @@ class VipsController < ApplicationController
   # POST /vips.json
   def create
     @vip = Vip.new(vip_params)
+
+    #BEFORE GETTING persistedFaceId
+    @vip.save
+
     uri = URI('https://api.projectoxford.ai/face/v1.0/facelists/vips/persistedFaces')
     uri.query = URI.encode_www_form({
         # Request parameters
@@ -41,7 +47,7 @@ class VipsController < ApplicationController
     # Request headers
     request['Ocp-Apim-Subscription-Key'] = '71e6768c33ae4b37b960d488c0b0ea17'
     # Request body
-    request.body = {url: 'http://images.huffingtonpost.com/2016-07-22-1469200935-7760030-trump2-thumb.jpg'}.to_json
+    request.body = {url: "#{IP_PORT}#{@vip.image.url}"}.to_json
 
     response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         http.request(request)
@@ -51,19 +57,20 @@ class VipsController < ApplicationController
     data = JSON.parse(response.body)
     puts '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
     @vip.img_name = data['persistedFaceId']
-    puts params.inspect
-
+    #puts params.inspect
 
     respond_to do |format|
-      if @vip.save
-        flash[:success] = "Photo saved!"
-        format.html { redirect_to @vip, notice: 'Vip was successfully created.' }
-        format.json { render :show, status: :created, location: @vip }
-      else
-        format.html { render :new }
-        format.json { render json: @vip.errors, status: :unprocessable_entity }
-      end
-    end
+          if @vip.save
+            flash[:success] = "Photo saved!"
+            format.html { redirect_to @vip, notice: 'Vip was successfully created.' }
+            format.json { render :show, status: :created, location: @vip }
+          else
+            format.html { render :new }
+            format.json { render json: @vip.errors, status: :unprocessable_entity }
+          end
+        end
+
+    
   end
 
   # PATCH/PUT /vips/1
