@@ -36,34 +36,35 @@ class VipsController < ApplicationController
     @vip = Vip.new(vip_params)
 
     #BEFORE GETTING persistedFaceId
-    @vip.save
+    if @vip.save
 
-    uri = URI('https://api.projectoxford.ai/face/v1.0/facelists/vips/persistedFaces')
-    uri.query = URI.encode_www_form({
-        # Request parameters
-    })
+      uri = URI('https://api.projectoxford.ai/face/v1.0/facelists/vips/persistedFaces')
+      uri.query = URI.encode_www_form({
+          # Request parameters
+      })
 
-    request = Net::HTTP::Post.new(uri.request_uri)
-    # Request headers
-    request['Content-Type'] = 'application/json'
-    # Request headers
-    request['Ocp-Apim-Subscription-Key'] = '71e6768c33ae4b37b960d488c0b0ea17'
-    # Request body
-    request.body = {url: "#{IP_PORT}#{@vip.image.url}"}.to_json
+      request = Net::HTTP::Post.new(uri.request_uri)
+      # Request headers
+      request['Content-Type'] = 'application/json'
+      # Request headers
+      request['Ocp-Apim-Subscription-Key'] = '71e6768c33ae4b37b960d488c0b0ea17'
+      # Request body
+      request.body = {url: "#{IP_PORT}#{@vip.image.url}"}.to_json
 
-    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
-        http.request(request)
-      end
+      response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
+          http.request(request)
+        end
 
-    @tempURL = "#{IP_PORT}#{@vip.image.url}"
-    @tempBody = response.body
-    puts response.body
-    data = JSON.parse(response.body)
-    puts '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
-    puts tempURL
-    @vip.img_name = data['persistedFaceId']
+      @tempURL = "#{IP_PORT}#{@vip.image.url}"
+      @tempBody = response.body
+      puts response.body
+      data = JSON.parse(response.body)
+      puts '+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+      puts tempURL
+      @vip.img_name = data['persistedFaceId']
     #puts params.inspect
-
+    end
+    
     respond_to do |format|
           if @vip.save
             flash[:success] = "Photo saved!"
