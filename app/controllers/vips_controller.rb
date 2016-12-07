@@ -47,7 +47,7 @@ class VipsController < ApplicationController
     # Request headers
     request['Ocp-Apim-Subscription-Key'] = '71e6768c33ae4b37b960d488c0b0ea17'
     # Request body
-    request.body = {url: "#{IP_PORT}#{@vip.image.url}"}.to_json
+    request.body = {url: "#{request.host_with_port}#{@vip.image.url}"}.to_json
 
     response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
         http.request(request)
