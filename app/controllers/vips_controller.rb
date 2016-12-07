@@ -4,6 +4,7 @@ require 'json'
 class VipsController < ApplicationController
   before_action :set_vip, only: [:show, :edit, :update, :destroy]
   IP_PORT = 'http://67.188.93.111:3000'
+  protect_from_forgery with: :null_session
 
 
   # GET /vips
