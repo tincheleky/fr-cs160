@@ -2,7 +2,7 @@ require 'net/http'
 require 'json'
 
 class MatchingsController < ApplicationController
-	IP_PORT = 'http://gcp-fr.appspot.com'
+	IP_PORT = 'http://67.188.93.111:3000'
 	protect_from_forgery with: :null_session
 
 	def new 

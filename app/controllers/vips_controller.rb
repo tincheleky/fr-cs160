@@ -3,7 +3,7 @@ require 'json'
 
 class VipsController < ApplicationController
   before_action :set_vip, only: [:show, :edit, :update, :destroy]
-  IP_PORT = 'http://gcp-fr.appspot.com'
+  IP_PORT = 'http://67.188.93.111:3000'
   protect_from_forgery with: :null_session
   attr_reader :tempURL
   attr_reader :tempBody 
@@ -64,7 +64,7 @@ class VipsController < ApplicationController
       @vip.img_name = data['persistedFaceId']
     #puts params.inspect
     end
-    
+
     respond_to do |format|
           if @vip.save
             flash[:success] = "Photo saved!"
