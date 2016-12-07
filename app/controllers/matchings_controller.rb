@@ -2,7 +2,7 @@ require 'net/http'
 require 'json'
 
 class MatchingsController < ApplicationController
-	IP_PORT = 'http://67.188.93.111:3000'
+	IP_PORT = 'http://gcp-fr.appspot.com'
 	protect_from_forgery with: :null_session
 
 	def new 
@@ -31,7 +31,7 @@ class MatchingsController < ApplicationController
 	    # Request headers
 	    request['Ocp-Apim-Subscription-Key'] = '71e6768c33ae4b37b960d488c0b0ea17'
 	    # Request body
-	    request.body = {url: "#{request.host_with_port}#{@matching.image.url}"}.to_json
+	    request.body = {url: "#{IP_PORT}#{@matching.image.url}"}.to_json
 
 	    response = Net::HTTP.start(uri.host, uri.port, :use_ssl => uri.scheme == 'https') do |http|
 	        http.request(request)
