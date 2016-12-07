@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Vips</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Img name</th>
+      <th>Img type</th>
+      <th>Img data</th>
+      <th>Size</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @vips.each do |vip| %>
+      <tr>
+        <td><%= vip.img_name %></td>
+        <td><%= vip.img_type %></td>
+        <td><%= image_tag vip.image.url, size: "60x60"  %></td>
+        <td><%= vip.size %></td>
+        <td><%= link_to 'Show', vip %></td>
+        <td><%= link_to 'Edit', edit_vip_path(vip) %></td>
+        <td><%= link_to 'Destroy', vip, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Vip', new_vip_path %>

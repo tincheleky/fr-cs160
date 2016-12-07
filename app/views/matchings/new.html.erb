@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+  <style>
+      body{
+          background: grey;
+      }
+
+      .container{
+          width: 400px;
+          margin: 0 auto;
+          padding: 0px;
+      }
+
+      img{
+          margin: 0px;
+          padding: 0px;
+      }
+
+    </style>
+
+
+</head>
+<body>
+
+<div class="container">
+    <div class="text-center">
+        <h1>Project FR</h1>
+        </br>
+    </div>
+
+    <img id="photo" src="http://www.oldpotterybarn.co.uk/wp-content/uploads/2015/06/default-medium.png"  class="img-rounded"alt="Ops !" width="400" height="400">
+    </br>
+    </br>
+    </br>
+    <!--<input type="" class="btn btn-primary btn-block" name="btnUpload">Upload a photo</button>-->
+    <!-- <label class="btn btn-block btn-primary btn-file" id="unloadBtn" >Upload your photo 
+        <input type="file" id="imgFile" style="display: none;">
+    </label>
+    <script>
+        function loadImg(input) {
+            if (input.files && input.files[0]) {
+                var img = new FileReader();
+
+                img.onload = function (e) {
+                    $('#photo').attr('src', e.target.result);
+                    document.getElementById("unloadBtn").innerHTML = "Click to see which VIP you resemble the most . . .";
+                    document.getElementById("unloadBtn").onclick = function () {
+                                                                    location.href = "http://localhost:3000/upload/show.html";
+                                                                    };
+                }
+
+                img.readAsDataURL(input.files[0]);
+            }
+        }
+
+        $("#imgFile").change(function(){
+            loadImg(this);
+        });
+
+    </script> -->
+<%= form_for(@matching) do |f| %>
+<div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image, required: true %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+
+
+<% end %>
+
+</div>
+
+</body>
+</html>
+

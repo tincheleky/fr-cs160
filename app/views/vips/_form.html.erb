@@ -1,0 +1,37 @@
+<%= form_for(vip) do |f| %>
+  <% if vip.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(vip.errors.count, "error") %> prohibited this vip from being saved:</h2>
+
+      <ul>
+      <% vip.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :img_name %>
+    <%= f.text_field :img_name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :img_type %>
+    <%= f.text_field :img_type %>
+  </div>
+
+  <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image, required: true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :size %>
+    <%= f.number_field :size %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

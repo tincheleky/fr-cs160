@@ -1,0 +1,1 @@
+json.partial! "vips/vip", vip: @vip
